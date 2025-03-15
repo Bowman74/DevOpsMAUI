@@ -38,5 +38,5 @@ jobs:
 
   - script: |
       echo "##[section]Building .NET MAUI project for Android"
-      dotnet build QRTracker/QRTracker.csproj -f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)
+      dotnet build QRTracker/QRTracker.csproj -f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)
     displayName: 'Build project for Android'
