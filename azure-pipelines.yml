@@ -31,6 +31,10 @@ jobs:
     inputs:
       packageType: 'sdk'
       version: '9.x'
+  - task: CmdLine@2
+    displayName: "dotnet workload restore"
+    inputs:
+      script: 'dotnet workload restore'
 
   - script: |
       echo "##[section]Building .NET MAUI project for Android"
