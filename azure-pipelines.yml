@@ -31,6 +31,11 @@ jobs:
     inputs:
       packageType: 'sdk'
       version: '9.x'
+  
+  - script: |
+      sudo xcode-select -s /Applications/Xcode_16.2.app
+    displayName: Selects a specific version of Xcode
+  
   - task: CmdLine@2
     displayName: "dotnet workload restore"
     inputs:
