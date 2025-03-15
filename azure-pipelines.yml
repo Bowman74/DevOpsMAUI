@@ -30,7 +30,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '9.0.3'
+      version: '9.0.0'
 
   - script: |
       echo "##[section]Building .NET MAUI project for Android"
