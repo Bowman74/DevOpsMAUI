@@ -43,12 +43,12 @@ jobs:
   - task: CmdLine@2
     displayName: 'Build project for Android'
     inputs:
-      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)'
+      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)/Android'
 
   - task: CmdLine@2
     displayName: 'Build project for iOS'
     inputs:
-      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)'
+      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
 
   - task: CmdLine@2
     displayName: 'Build project for MacOS'
