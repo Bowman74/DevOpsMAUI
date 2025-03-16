@@ -36,6 +36,21 @@ jobs:
       script: 'dotnet workload restore'
 
   - task: CmdLine@2
+    displayName: "Selects a specific version of Xcode"
+    inputs:
+      script: 'sudo xcode-select -s /Applications/Xcode_16.2.app'
+
+  - task: CmdLine@2
     displayName: 'Build project for Android'
     inputs:
       script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)'
+
+  - task: CmdLine@2
+    displayName: 'Build project for iOS'
+    inputs:
+      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)'
+
+  - task: CmdLine@2
+    displayName: 'Build project for MacOS'
+    inputs:
+      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)'
