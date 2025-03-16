@@ -14,8 +14,11 @@ pr:
       - main
 
 variables:
-  buildConfiguration: 'Debug'
-  outputDirectory: '$(Build.ArtifactStagingDirectory)/output'
+  - group: BuildVariables
+  - name: buildConfiguration
+    value: 'Debug'
+  - name: outputDirectory
+    value: '$(Build.ArtifactStagingDirectory)/output'
 
 jobs:
 - job: Build_Main
