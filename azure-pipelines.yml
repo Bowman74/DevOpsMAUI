@@ -56,7 +56,7 @@ jobs:
   - task: CmdLine@2
     displayName: 'Build project for iOS'
     inputs:
-      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
+      script: 'dotnet publish QRTracker/QRTracker.csproj -f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
 
   - task: CmdLine@2
     displayName: 'Build project for MacOS'
