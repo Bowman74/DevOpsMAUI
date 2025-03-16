@@ -45,6 +45,11 @@ jobs:
     inputs:
       script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)/Android'
 
+  - task: InstallAppleCertificate@2
+    inputs:
+      certSecureFile: 'AppleDeveloperCertificate.p12'
+      certPwd: '$(iOSCertPassword)'
+
   - task: CmdLine@2
     displayName: 'Build project for iOS'
     inputs:
