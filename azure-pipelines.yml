@@ -54,3 +54,4 @@ jobs:
     displayName: 'Build project for MacOS'
     inputs:
       script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MacOS'
+      
