@@ -22,6 +22,7 @@ variables:
 
 stages:
 - stage: A
+  lockBehavior: sequential
   jobs:
   - job: Build_Main
     displayName: 'Build Main'
@@ -60,8 +61,6 @@ stages:
       inputs:
         script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MacOS'
 
-- stage: B
-  jobs:
   - job: Build_Windows
     displayName: 'Windows Main'
     pool:
