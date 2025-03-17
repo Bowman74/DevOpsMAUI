@@ -20,62 +20,66 @@ variables:
   - name: outputDirectory
     value: '$(Build.ArtifactStagingDirectory)/output'
 
-jobs:
-- job: Build_Main
-  displayName: 'Build Main'
-  pool:
-    vmImage: 'macos-latest'
+stages:
+- stage: A
+  jobs:
+  - job: Build_Main
+    displayName: 'Build Main'
+    pool:
+      vmImage: 'macos-latest'
 
-  steps:
+    steps:
 
-  - task: UseDotNet@2
-    inputs:
-      packageType: 'sdk'
-      version: '9.x'
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '9.x'
 
-  - task: CmdLine@2
-    displayName: "dotnet workload restore"
-    inputs:
-      script: 'dotnet workload restore'
+    - task: CmdLine@2
+      displayName: "dotnet workload restore"
+      inputs:
+        script: 'dotnet workload restore'
 
-  - task: CmdLine@2
-    displayName: "Selects a specific version of Xcode"
-    inputs:
-      script: 'sudo xcode-select -s /Applications/Xcode_16.2.app'
+    - task: CmdLine@2
+      displayName: "Selects a specific version of Xcode"
+      inputs:
+        script: 'sudo xcode-select -s /Applications/Xcode_16.2.app'
 
-  - task: CmdLine@2
-    displayName: 'Build project for Android'
-    inputs:
-      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)/Android'
+    - task: CmdLine@2
+      displayName: 'Build project for Android'
+      inputs:
+        script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)/Android'
 
-  - task: CmdLine@2
-    displayName: 'Build project for iOS'
-    inputs:
-      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
+    - task: CmdLine@2
+      displayName: 'Build project for iOS'
+      inputs:
+        script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
 
-  - task: CmdLine@2
-    displayName: 'Build project for MacOS'
-    inputs:
-      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MacOS'
+    - task: CmdLine@2
+      displayName: 'Build project for MacOS'
+      inputs:
+        script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MacOS'
 
-- job: Build_Windows
-  displayName: 'Windows Main'
-  pool:
-    vmImage: 'windows-latest'
+- stage: B
+  jobs:
+  - job: Build_Windows
+    displayName: 'Windows Main'
+    pool:
+      vmImage: 'windows-latest'
 
-  steps:
+    steps:
 
-  - task: UseDotNet@2
-    inputs:
-      packageType: 'sdk'
-      version: '9.x'
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '9.x'
 
-  - task: CmdLine@2
-    displayName: "dotnet workload restore"
-    inputs:
-      script: 'dotnet workload restore'
+    - task: CmdLine@2
+      displayName: "dotnet workload restore"
+      inputs:
+        script: 'dotnet workload restore'
 
-  - task: CmdLine@2
-    displayName: 'Build project for Windows'
-    inputs:
-      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-windows10.0.19041.0 --configuration $(buildConfiguration) --output $(outputDirectory)/Windows'
+    - task: CmdLine@2
+      displayName: 'Build project for Windows'
+      inputs:
+        script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-windows10.0.19041.0 --configuration $(buildConfiguration) --output $(outputDirectory)/Windows'
