@@ -21,6 +21,50 @@ variables:
     value: '$(Build.ArtifactStagingDirectory)/output'
 
 jobs:
+- job: Build_Main
+  displayName: 'Build Main'
+  pool:
+    vmImage: 'macos-latest'
+    demands: xcode
+
+  steps:
+
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '9.x'
+
+  - task: CmdLine@2
+    displayName: "dotnet workload restore"
+    inputs:
+      script: 'dotnet workload restore'
+
+  - task: CmdLine@2
+    displayName: "Selects a specific version of Xcode"
+    inputs:
+      script: 'sudo xcode-select -s /Applications/Xcode_16.2.app'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for Android'
+    inputs:
+      command: build
+      projects: 'QRTracker/QRTracker.csproj'
+      arguments: '-f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)/Android'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for iOS'
+    inputs:
+      command: build
+      projects: 'QRTracker/QRTracker.csproj'
+      arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for MacOS'
+    inputs:
+      command: build
+      projects: 'QRTracker/QRTracker.csproj'
+      arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MacOS'
+
 - job: Build_Windows
   displayName: 'Windows Main'
   pool:
