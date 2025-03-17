@@ -38,10 +38,11 @@ jobs:
     inputs:
       script: 'dotnet workload restore'
 
-  - task: CmdLine@2
-    displayName: 'Build project for Windows'
+  - task: DotNetCoreCLI@2
     inputs:
-      script: 'dotnet build QRTracker/QRTracker.csproj -f net9.0-windows10.0.19041.0 --configuration $(buildConfiguration) --output $(outputDirectory)/Windows'
+      command: build
+      projects: 'QRTracker/QRTracker.csproj'
+      arguments: '-f net9.0-windows10.0.19041.0 --configuration $(buildConfiguration) --output $(outputDirectory)/Windows'
 
   - task: DotNetCoreCLI@2
     inputs:
