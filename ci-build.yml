@@ -58,7 +58,7 @@ jobs:
   
   - task: InstallAppleProvisioningProfile@1
     inputs:
-      provProfileSecureFile: 'LinkedIn_Learning_QRTracker.mobileprovision'
+      provProfileSecureFile: 'VS_comlinkedinlearningqrtracker_Development.mobileprovision'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build project for iOS'
