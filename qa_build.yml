@@ -51,6 +51,7 @@ jobs:
     inputs:
       command: publish
       publishWebProjects: false
+      verbosityRestore: Diagnostic
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
 
