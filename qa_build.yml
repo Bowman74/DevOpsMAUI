@@ -57,6 +57,30 @@ jobs:
       publishWebProjects: false
       verbosityRestore: Diagnostic
       projects: 'QRTracker/QRTracker.csproj'
-      arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS -p:CodesignKey="$(codesignKey)" -p:CodesignProvision="$(codesignProvisioningProfile)" -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist"'
+      arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
+      --output $(outputDirectory)/iOS -p:CodesignKey="$(codesignKey)" 
+      -p:CodesignProvision="$(codesignProvisioningProfile)" 
+      -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
+      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false'
+      zipAfterPublish: false
+    env:
+        DISABLE_BITCODE: 'yes'
+  
+  - task: CopyFiles@2
+    displayName: 'Copy file from Build to Staging'
+    inputs:
+        SourceFolder: '$(outputDirectory)/iOS'
+        Contents: '**/*.ipa'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        CleanTargetFolder: true
+        OverWrite: true
+  
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish the Staging Files.'
+    inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+  
 
  
