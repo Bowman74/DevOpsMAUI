@@ -12,6 +12,10 @@ variables:
     value: 'Release'
   - name: outputDirectory
     value: '$(Build.ArtifactStagingDirectory)/output'
+  - name: codesignKey
+    value: 'Apple Development: kevin Ford (S6DU94W64R)'
+  - name: codesignProvisioningProfile
+    value: 'LinkedIn Learning QRTracker iOS'
 
 jobs:
 - job: Build_Main
@@ -53,6 +57,6 @@ jobs:
       publishWebProjects: false
       verbosityRestore: Diagnostic
       projects: 'QRTracker/QRTracker.csproj'
-      arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
+      arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS -p:CodesignKey="$(codesignKey)" -p:CodesignProvision="$(codesignProvisioningProfile)"'
 
  
