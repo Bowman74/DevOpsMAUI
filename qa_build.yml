@@ -103,6 +103,7 @@ jobs:
         serviceEndpoint: 'Apple App Store Connect'
         releaseTrack: 'TestFlight'
         appIdentifier: 'com.linkedinlearning.qrtracker'
+        ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
         appType: 'iOS'
         shouldSkipWaitingForProcessing: true
         shouldSkipSubmission: true
