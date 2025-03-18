@@ -50,6 +50,7 @@ jobs:
     displayName: 'Build project for iOS'
     inputs:
       command: publish
+      publishWebProjects: false
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
 
