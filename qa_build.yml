@@ -66,15 +66,6 @@ jobs:
     env:
         DISABLE_BITCODE: 'yes'
   
-  - task: CopyFiles@2
-    displayName: 'Copy file from Build to Staging'
-    inputs:
-        SourceFolder: '$(outputDirectory)/iOS'
-        Contents: '**/*.ipa'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-        CleanTargetFolder: true
-        OverWrite: true
-        flattenFolders: true
   
   - task: CmdLine@2
     inputs:
