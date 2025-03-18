@@ -85,7 +85,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish the Staging Files.'
     inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        PathtoPublish: '$(outputDirectory)/iOS'
         ArtifactName: 'drop'
         publishLocation: 'Container'
   
