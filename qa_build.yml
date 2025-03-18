@@ -76,6 +76,21 @@ jobs:
         OverWrite: true
         flattenFolders: true
   
+  - task: CmdLine@2
+    inputs:
+      script: |
+        echo "Structure of work folder of this pipeline:"
+        ls $(Agent.WorkFolder)/1
+
+        echo "Build.ArtifactStagingDirectory:" 
+        ls "$(Build.ArtifactStagingDirectory)"
+
+        echo "Build.BinariesDirectory:" 
+        ls "$(Build.BinariesDirectory)"
+
+        echo "Build.SourcesDirectory:"
+        ls "$(Build.SourcesDirectory)"
+  
   - task: PublishBuildArtifacts@1
     displayName: 'Publish the Staging Files.'
     inputs:
