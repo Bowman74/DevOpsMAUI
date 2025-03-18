@@ -82,12 +82,28 @@ jobs:
         echo "Build.SourcesDirectory:"
         ls "$(Build.SourcesDirectory)"
   
+  - task: CopyFiles@2
+    displayName: 'Copy file from Build to Staging'
+    inputs:
+        SourceFolder: '$(outputDirectory)/iOS/QRTracker'
+        Contents: 'QRTracker.ipa'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/iOSStaging'
+        CleanTargetFolder: true
+        OverWrite: true
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish the Staging Files.'
     inputs:
-        PathtoPublish: '$(outputDirectory)/iOS'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
         ArtifactName: 'drop'
         publishLocation: 'Container'
   
-
- 
+  - task: AppStoreRelease@1
+    inputs:
+        serviceEndpoint: 'Apple App Store Connect'
+        releaseTrack: 'TestFlight'
+        appIdentifier: 'com.linkedinlearning.qrtracker'
+        appType: 'iOS'
+        shouldSkipWaitingForProcessing: true
+        shouldSkipSubmission: true
+        appSpecificId: '6743451240'
