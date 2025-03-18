@@ -64,6 +64,7 @@
 	  <ProvisioningType>automatic</ProvisioningType>
 	  <CodesignKey>Apple Development: Created via API (9QSR246R93)</CodesignKey>
 	  <CodesignProvision>VS: com.linkedinlearning.qrtracker Development</CodesignProvision>
+      <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
@@ -90,6 +91,10 @@
 	  <ApplicationId>com.linkedinlearning.qrtracker</ApplicationId>
 	</PropertyGroup>
 
+    <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-maccatalyst'">
+        <CodesignEntitlements>Platforms\MacCatalyst\Entitlements.plist</CodesignEntitlements>
+    </PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -109,6 +114,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Platforms\iOS\Entitlements.plist" />
 	  <None Remove="Resources\Raw\wwwroot\index.html" />
 	</ItemGroup>
 
@@ -116,6 +122,10 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.50" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.3" />
 		<PackageReference Include="Oscore.QrCodes.Maui" Version="1.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Include="Platforms\iOS\Entitlements.plist" />
 	</ItemGroup>
 
 	<ItemGroup>
