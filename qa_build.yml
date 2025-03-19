@@ -13,9 +13,9 @@ variables:
   - name: outputDirectory
     value: '$(Build.ArtifactStagingDirectory)/output'
   - name: codesignKey
-    value: 'Apple Development: kevin Ford (S6DU94W64R)'
+    value: 'Apple Distribution: kevin Ford (B4XFLSJ3F4)'
   - name: codesignProvisioningProfile
-    value: 'LinkedIn Learning QRTracker iOS'
+    value: 'LinkedIn Learning QRTracker'
 
 jobs:
 - job: Build_Main
@@ -43,12 +43,12 @@ jobs:
 
   - task: InstallAppleCertificate@2
     inputs:
-      certSecureFile: 'AppleDeveloperCertificate.p12'
+      certSecureFile: 'AppleDistributionCertificate.p12'
       certPwd: '$(iOSCertPassword)'
   
   - task: InstallAppleProvisioningProfile@1
     inputs:
-      provProfileSecureFile: 'LinkedIn_Learning_QRTracker_iOS.mobileprovision'
+      provProfileSecureFile: 'LinkedIn_Learning_QRTracker.mobileprovision'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build project for iOS'
