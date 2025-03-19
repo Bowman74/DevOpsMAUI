@@ -67,10 +67,6 @@ jobs:
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
 
-  - task: InstallAppleProvisioningProfile@1
-    inputs:
-      provProfileSecureFile: 'LinkedIn_Learning_QRTracker.provisionprofile'
-
   - task: DotNetCoreCLI@2
     displayName: 'Build project for MacOS'
     inputs:
