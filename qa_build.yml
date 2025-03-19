@@ -124,7 +124,7 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Copy file from Build to Staging'
     inputs:
-        SourceFolder: '$(outputDirectory)/iOS/QRTracker'
+        SourceFolder: '$(outputDirectory)/MacOS/QRTracker'
         Contents: 'QRTracker*.pkg'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/MacOSStaging'
         CleanTargetFolder: true
