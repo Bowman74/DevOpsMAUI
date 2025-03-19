@@ -64,7 +64,7 @@ jobs:
       -p:CodesignProvision="$(codesignProvisioningProfileiOS)" 
       -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-      --version-suffix $(Build.BuildNumber)'
+      /p:Version=1.0.$(Build.BuildId)'
       zipAfterPublish: false
     env:
         DISABLE_BITCODE: 'yes'
@@ -110,9 +110,9 @@ jobs:
       arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
       --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
-      -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
+      -p:CodesignEntitlements="Platforms/MacCatalyst/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-      --version-suffix $(Build.BuildNumber)'
+      /p:Version=1.0.$(Build.BuildId)'
       zipAfterPublish: false
     env:
         DISABLE_BITCODE: 'yes'
