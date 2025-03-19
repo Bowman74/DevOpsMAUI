@@ -14,7 +14,9 @@ variables:
     value: '$(Build.ArtifactStagingDirectory)/output'
   - name: codesignKey
     value: 'Apple Distribution: kevin Ford (B4XFLSJ3F4)'
-  - name: codesignProvisioningProfile
+  - name: codesignProvisioningProfileiOS
+    value: 'LinkedIn Learning QRTracker'
+  - name: codesignProvisioningProfileMac
     value: 'LinkedIn Learning QRTracker Mac'
 
 jobs:
@@ -59,7 +61,7 @@ jobs:
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
       --output $(outputDirectory)/iOS -p:CodesignKey="$(codesignKey)" 
-      -p:CodesignProvision="$(codesignProvisioningProfile)" 
+      -p:CodesignProvision="$(codesignProvisioningProfileiOS)" 
       -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false'
       zipAfterPublish: false
@@ -106,7 +108,7 @@ jobs:
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
       --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
-      -p:CodesignProvision="$(codesignProvisioningProfile)" 
+      -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
       -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false'
       zipAfterPublish: false
