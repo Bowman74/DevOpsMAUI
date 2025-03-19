@@ -110,7 +110,7 @@ jobs:
       publishWebProjects: false
       verbosityRestore: Diagnostic
       projects: 'QRTracker/QRTracker.csproj'
-      arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
+      arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) 
       --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
       -p:CodesignEntitlements="Platforms/MacCatalyst/Entitlements.plist" 
