@@ -121,6 +121,14 @@ jobs:
     env:
         DISABLE_BITCODE: 'yes'
 
+  - task: CopyFiles@2
+    displayName: 'Copy file from Build to Staging'
+    inputs:
+        SourceFolder: '$(outputDirectory)/iOS/QRTracker'
+        Contents: 'QRTracker*.pkg'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/MacOSStaging'
+        CleanTargetFolder: true
+        OverWrite: true
   - task: PublishBuildArtifacts@1
     displayName: 'Publish the MacOS Staging Files.'
     inputs:
