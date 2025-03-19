@@ -12,11 +12,4 @@
                 Route="MainPage"/>
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="User Information">
-        <Tab>
-            <ShellContent 
-                ContentTemplate="{DataTemplate local:UserInformationPage}"
-                Route="MainPage"/>
-        </Tab>
-    </FlyoutItem>
 </Shell>

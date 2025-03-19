@@ -47,6 +47,5 @@ public static class MauiProgram
         builder.Services.AddScoped<MainViewModel>();
         builder.Services.AddScoped<QRItemDetailViewModel>();
         builder.Services.AddScoped<MainApplicationWindowViewModel>();
-        builder.Services.AddScoped<UserInformationViewModel>();
     }
 }
