@@ -64,7 +64,8 @@ jobs:
       -p:CodesignProvision="$(codesignProvisioningProfileiOS)" 
       -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-      /p:Version=1.0.$(Build.BuildId)'
+      /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
+      /p:ApplicationVersion=1.0.$(Build.BuildId)'
       zipAfterPublish: false
     env:
         DISABLE_BITCODE: 'yes'
@@ -112,7 +113,8 @@ jobs:
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
       -p:CodesignEntitlements="Platforms/MacCatalyst/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-      /p:Version=1.0.$(Build.BuildId)'
+      /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
+      /p:ApplicationVersion=1.0.$(Build.BuildId)'
       zipAfterPublish: false
     env:
         DISABLE_BITCODE: 'yes'
