@@ -34,5 +34,9 @@
 	<array>
 		<string>fetch</string>
 	</array>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0.*</string>
 </dict>
 </plist>
