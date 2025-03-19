@@ -63,7 +63,8 @@ jobs:
       --output $(outputDirectory)/iOS -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileiOS)" 
       -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
-      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false'
+      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
+      --version-suffix $(Build.BuildNumber)'
       zipAfterPublish: false
     env:
         DISABLE_BITCODE: 'yes'
@@ -110,7 +111,8 @@ jobs:
       --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
       -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
-      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false'
+      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
+      --version-suffix $(Build.BuildNumber)'
       zipAfterPublish: false
     env:
         DISABLE_BITCODE: 'yes'
