@@ -4,7 +4,9 @@
 # https://aka.ms/yaml
 
 trigger:
-- qa
+  branches:
+    include:
+      - qa
 
 variables:
   - group: BuildVariables
@@ -64,7 +66,8 @@ jobs:
       -p:CodesignProvision="$(codesignProvisioningProfileiOS)" 
       -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-      --version-suffix $(Build.BuildNumber)'
+      /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
+      /p:ApplicationVersion=1.0.$(Build.BuildId)'
       zipAfterPublish: false
     env:
         DISABLE_BITCODE: 'yes'
@@ -107,16 +110,25 @@ jobs:
       publishWebProjects: false
       verbosityRestore: Diagnostic
       projects: 'QRTracker/QRTracker.csproj'
-      arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
+      arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) 
       --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
-      -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
+      -p:CodesignEntitlements="Platforms/MacCatalyst/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-      --version-suffix $(Build.BuildNumber)'
+      /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
+      /p:ApplicationVersion=1.0.$(Build.BuildId)'
       zipAfterPublish: false
     env:
         DISABLE_BITCODE: 'yes'
 
+  - task: CopyFiles@2
+    displayName: 'Copy file from Build to Staging'
+    inputs:
+        SourceFolder: '$(outputDirectory)/MacOS/QRTracker'
+        Contents: 'QRTracker*.pkg'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/MacOSStaging'
+        CleanTargetFolder: true
+        OverWrite: true
   - task: PublishBuildArtifacts@1
     displayName: 'Publish the MacOS Staging Files.'
     inputs:
@@ -129,7 +141,7 @@ jobs:
         serviceEndpoint: 'Apple App Store Connect'
         releaseTrack: 'TestFlight'
         appIdentifier: 'com.linkedinlearning.qrtracker'
-        ipaPath: '$(build.artifactstagingdirectory)/MacOSStaging/*.ipa'
+        ipaPath: '$(build.artifactstagingdirectory)/MacOSStaging/*.pkg'
         appType: 'macOS'
         shouldSkipWaitingForProcessing: true
         shouldSkipSubmission: true
