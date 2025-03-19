@@ -36,5 +36,7 @@
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string></string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.education</string>
 </dict>
 </plist>
