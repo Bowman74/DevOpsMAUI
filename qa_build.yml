@@ -48,67 +48,71 @@ jobs:
       script: 'sudo xcode-select -s /Applications/Xcode_16.2.app'
 
   - task: InstallAppleCertificate@2
+    displayName: 'Add distribution certificate'
     inputs:
       certSecureFile: 'AppleDistributionCertificate.p12'
       certPwd: '$(iOSCertPassword)'
       
   - task: InstallAppleCertificate@2
+    displayName: 'Add installer certificate'
     inputs:
       certSecureFile: 'AppleMacInstallerCertificate.p12'
       certPwd: '$(iOSCertPassword)'
   
-#  - task: InstallAppleProvisioningProfile@1
-#    inputs:
-#      provProfileSecureFile: 'LinkedIn_Learning_QRTracker.mobileprovision'
-
-#  - task: DotNetCoreCLI@2
-#    displayName: 'Build project for iOS'
-#    inputs:
-#      command: publish
-#      publishWebProjects: false
-#      verbosityRestore: Diagnostic
-#      projects: 'QRTracker/QRTracker.csproj'
-#      arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
-#      --output $(outputDirectory)/iOS -p:CodesignKey="$(codesignKey)" 
-#      -p:CodesignProvision="$(codesignProvisioningProfileiOS)" 
-#      -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
-#      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-#      /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
-#      /p:ApplicationVersion=1.0.$(Build.BuildId)'
-#      zipAfterPublish: false
-#    env:
-#        DISABLE_BITCODE: 'yes'
-  
-#  - task: CopyFiles@2
-#    displayName: 'Copy iOS file from Build to Staging'
-#    inputs:
-#        SourceFolder: '$(outputDirectory)/iOS/QRTracker'
-#        Contents: 'QRTracker.ipa'
-#        TargetFolder: '$(Build.ArtifactStagingDirectory)/iOSStaging'
-#        CleanTargetFolder: true
-#        OverWrite: true
-
-#  - task: PublishBuildArtifacts@1
-#    displayName: 'Publish iOS the Staging Files.'
-#    inputs:
-#        PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
-#        ArtifactName: 'drop'
-#        publishLocation: 'Container'
-  
-#  - task: AppStoreRelease@1
-#    inputs:
-#        serviceEndpoint: 'Apple App Store Connect'
-#        releaseTrack: 'TestFlight'
-#        appIdentifier: 'com.linkedinlearning.qrtracker'
-#        ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
-#        appType: 'iOS'
-#        shouldSkipWaitingForProcessing: true
-#        shouldSkipSubmission: true
-#        appSpecificId: '6743451240'
+  - task: InstallAppleProvisioningProfile@1
+    displayName: 'Add iOS provisioning profile'
+    inputs:
+      provProfileSecureFile: 'LinkedIn_Learning_QRTracker.mobileprovision'
 
   - task: InstallAppleProvisioningProfile@1
+    displayName: 'Add MacOS provisioning profile'
     inputs:
       provProfileSecureFile: 'LinkedIn_Learning_QRTracker_Mac.provisionprofile'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for iOS'
+    inputs:
+      command: publish
+      publishWebProjects: false
+      verbosityRestore: Diagnostic
+      projects: 'QRTracker/QRTracker.csproj'
+      arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
+      --output $(outputDirectory)/iOS -p:CodesignKey="$(codesignKey)" 
+      -p:CodesignProvision="$(codesignProvisioningProfileiOS)" 
+      -p:CodesignEntitlements="Platforms/iOS/Entitlements.plist" 
+      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
+      /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
+      /p:ApplicationVersion=1.0.$(Build.BuildId)'
+      zipAfterPublish: false
+    env:
+        DISABLE_BITCODE: 'yes'
+  
+  - task: CopyFiles@2
+    displayName: 'Copy iOS file from Build to Staging'
+    inputs:
+        SourceFolder: '$(outputDirectory)/iOS/QRTracker'
+        Contents: 'QRTracker.ipa'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/iOSStaging'
+        CleanTargetFolder: true
+        OverWrite: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish iOS the Staging Files.'
+    inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+  
+  - task: AppStoreRelease@1
+    inputs:
+        serviceEndpoint: 'Apple App Store Connect'
+        releaseTrack: 'TestFlight'
+        appIdentifier: 'com.linkedinlearning.qrtracker'
+        ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
+        appType: 'iOS'
+        shouldSkipWaitingForProcessing: true
+        shouldSkipSubmission: true
+        appSpecificId: '6743451240'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build project for MacOS'
