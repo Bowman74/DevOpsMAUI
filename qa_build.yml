@@ -120,6 +120,7 @@ jobs:
       arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) 
       --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
+      -p:EnablePackageSigning=true
       -p:PackageSigningKey="$(packagesignKey)"
       -p:CodesignEntitlements="Platforms/MacCatalyst/Entitlements.plist" 
       /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
