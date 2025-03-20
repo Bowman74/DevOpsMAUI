@@ -104,6 +104,7 @@ jobs:
         publishLocation: 'Container'
   
   - task: AppStoreRelease@1
+    displayName: 'Push iOS app to App Store Connect'
     inputs:
         serviceEndpoint: 'Apple App Store Connect'
         releaseTrack: 'TestFlight'
@@ -150,6 +151,7 @@ jobs:
         publishLocation: 'Container'
 
   - task: AppStoreRelease@1
+    displayName: 'Push MacOS app to App Store Connect'
     inputs:
         serviceEndpoint: 'Apple App Store Connect'
         releaseTrack: 'TestFlight'
