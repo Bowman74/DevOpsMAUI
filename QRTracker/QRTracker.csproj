@@ -25,7 +25,7 @@
         <ApplicationTitle>QRTracker</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.qrtracker</ApplicationId>
+        <ApplicationId>com.linkedinlearning.qrtracker</ApplicationId>
 
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

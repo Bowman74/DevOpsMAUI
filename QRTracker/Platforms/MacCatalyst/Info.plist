@@ -51,7 +51,7 @@
                 </array>
             </dict>
         </dict>
-        <key>CFBundleShortVersionString</key>
-        <string>1.0.0.*</string>
+        <key>LSApplicationCategoryType</key>
+        <string>public.app-category.education</string>
     </dict>
 </plist>
