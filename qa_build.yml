@@ -74,7 +74,6 @@ jobs:
     inputs:
       command: publish
       publishWebProjects: false
-      verbosityRestore: Diagnostic
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
       --output $(outputDirectory)/iOS -p:CodesignKey="$(codesignKey)" 
@@ -85,42 +84,41 @@ jobs:
       /p:ApplicationVersion=1.0.$(Build.BuildId)'
       zipAfterPublish: false
     env:
-        DISABLE_BITCODE: 'yes'
+      DISABLE_BITCODE: 'yes'
   
   - task: CopyFiles@2
     displayName: 'Copy iOS file from Build to Staging'
     inputs:
-        SourceFolder: '$(outputDirectory)/iOS/QRTracker'
-        Contents: 'QRTracker.ipa'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)/iOSStaging'
-        CleanTargetFolder: true
-        OverWrite: true
+      SourceFolder: '$(outputDirectory)/iOS/QRTracker'
+      Contents: 'QRTracker.ipa'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/iOSStaging'
+      CleanTargetFolder: true
+      OverWrite: true
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish iOS the Staging Files.'
     inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
   
   - task: AppStoreRelease@1
     displayName: 'Push iOS app to App Store Connect'
     inputs:
-        serviceEndpoint: 'Apple App Store Connect'
-        releaseTrack: 'TestFlight'
-        appIdentifier: 'com.linkedinlearning.qrtracker'
-        ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
-        appType: 'iOS'
-        shouldSkipWaitingForProcessing: true
-        shouldSkipSubmission: true
-        appSpecificId: '6743451240'
+      serviceEndpoint: 'Apple App Store Connect'
+      releaseTrack: 'TestFlight'
+      appIdentifier: 'com.linkedinlearning.qrtracker'
+      ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
+      appType: 'iOS'
+      shouldSkipWaitingForProcessing: true
+      shouldSkipSubmission: true
+      appSpecificId: '6743451240'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build project for MacOS'
     inputs:
       command: publish
       publishWebProjects: false
-      verbosityRestore: Diagnostic
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) 
       --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
