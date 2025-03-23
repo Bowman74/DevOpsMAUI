@@ -184,14 +184,14 @@ jobs:
       arguments: '-f net9.0-android --configuration $(buildConfiguration) 
       --output $(outputDirectory)/Android -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
+      -p:JavacSourceVersion=17 -p:JavacTargetVersion=17 
       /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
       /p:ApplicationVersion=$(Build.BuildId)
       /p:AndroidSigningKeyPass=$(KeyStorePassword) 
       /p:AndroidSigningStorePass=$(KeyStorePassword) 
       /p:AndroidSigningKeyStore=$(System.DefaultWorkingDirectory)\\$(keyStoreName) 
       /p:AndroidSigningKeyAlias=$(KeyStoreAlias) 
-      /p:AndroidKeyStore=true
-      -p:JavacSourceVersion=17 -p:JavacTargetVersion=17'
+      /p:AndroidKeyStore=true'
       zipAfterPublish: false
       
   - task: CopyFiles@2
