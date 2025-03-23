@@ -22,6 +22,8 @@ variables:
     value: 'LinkedIn Learning QRTracker'
   - name: codesignProvisioningProfileMac
     value: 'LinkedIn Learning QRTracker Mac'
+  - name: keyStoreName
+    value: 'LinkedInClass.ks'
 
 jobs:
 - job: Build_Main
@@ -99,20 +101,8 @@ jobs:
     displayName: 'Publish iOS the Staging Files.'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
-      ArtifactName: 'drop'
+      ArtifactName: 'ios drop'
       publishLocation: 'Container'
-  
-  - task: AppStoreRelease@1
-    displayName: 'Push iOS app to App Store Connect'
-    inputs:
-      serviceEndpoint: 'Apple App Store Connect'
-      releaseTrack: 'TestFlight'
-      appIdentifier: 'com.linkedinlearning.qrtracker'
-      ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
-      appType: 'iOS'
-      shouldSkipWaitingForProcessing: true
-      shouldSkipSubmission: true
-      appSpecificId: '6743451240'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build project for MacOS'
@@ -141,12 +131,72 @@ jobs:
         TargetFolder: '$(Build.ArtifactStagingDirectory)/MacOSStaging'
         CleanTargetFolder: true
         OverWrite: true
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish the MacOS Staging Files.'
     inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/MacOSStaging'
-        ArtifactName: 'drop'
+        ArtifactName: 'MacOS drop'
         publishLocation: 'Container'
+
+  - task: DownloadSecureFile@1
+    displayName: Download Android keystore file 
+    name: keystore
+    inputs:
+      secureFile: '$(keyStoreName)'
+  
+  - task: CmdLine@2
+    displayName: Move Keystore to Working Directory
+    inputs: 
+      script: |
+        mv $(keystore.secureFilePath) $(System.DefaultWorkingDirectory)
+        
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for Android'
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: 'QRTracker/QRTracker.csproj'
+      arguments: '-f net9.0-android --configuration $(buildConfiguration) 
+      --output $(outputDirectory)/Android
+      /p:AndroidPackageFormat=aab
+      /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
+      /p:ApplicationVersion=$(Build.BuildId)
+      /p:AndroidSigningKeyPass=$(KeyStorePassword) 
+      /p:AndroidSigningStorePass=$(KeyStorePassword) 
+      /p:AndroidSigningKeyStore=$(System.DefaultWorkingDirectory)\\$(keyStoreName) 
+      /p:AndroidSigningKeyAlias=$(KeyStoreAlias) 
+      /p:AndroidKeyStore=true'
+      zipAfterPublish: false
+      
+  - task: CopyFiles@2
+    displayName: Copy APK and AAB
+    inputs:
+      SourceFolder: '$(outputDirectory)/Android/QRTracker'
+      Contents: |
+        *Signed.apk
+        *Signed.aab
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      flattenFolders: true
+ 
+  - task: PublishBuildArtifacts@1
+    displayName: Publish APK und AAB
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'Android Drop'
+      publishLocation: 'Container' 
+  
+  - task: AppStoreRelease@1
+    displayName: 'Push iOS app to App Store Connect'
+    inputs:
+      serviceEndpoint: 'Apple App Store Connect'
+      releaseTrack: 'TestFlight'
+      appIdentifier: 'com.linkedinlearning.qrtracker'
+      ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
+      appType: 'iOS'
+      shouldSkipWaitingForProcessing: true
+      shouldSkipSubmission: true
+      appSpecificId: '6743451240'
 
   - task: AppStoreRelease@1
     displayName: 'Push MacOS app to App Store Connect'
@@ -159,3 +209,12 @@ jobs:
         shouldSkipWaitingForProcessing: true
         shouldSkipSubmission: true
         appSpecificId: '6743451240'
+
+  - task: GooglePlayRelease@4
+    inputs:
+      serviceConnection: 'Google Play Console Connection'
+      applicationId: 'com.linkedinlearning.qrtracker'
+      action: 'SingleBundle'
+      bundleFile: '$(outputDirectory)/Android/QRTracker/*.aab'
+      track: 'internal'
+      isDraftRelease: true
