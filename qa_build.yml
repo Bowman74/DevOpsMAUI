@@ -101,7 +101,7 @@ jobs:
 #    displayName: 'Publish iOS the Staging Files.'
 #    inputs:
 #      PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
-#      ArtifactName: 'drop'
+#      ArtifactName: 'ios drop'
 #      publishLocation: 'Container'
   
 #  - task: AppStoreRelease@1
@@ -143,11 +143,12 @@ jobs:
 #        TargetFolder: '$(Build.ArtifactStagingDirectory)/MacOSStaging'
 #        CleanTargetFolder: true
 #        OverWrite: true
+
 #  - task: PublishBuildArtifacts@1
 #    displayName: 'Publish the MacOS Staging Files.'
 #    inputs:
 #        PathtoPublish: '$(Build.ArtifactStagingDirectory)/MacOSStaging'
-#        ArtifactName: 'drop'
+#        ArtifactName: 'MacOS drop'
 #        publishLocation: 'Container'
 
 #  - task: AppStoreRelease@1
@@ -187,7 +188,7 @@ jobs:
       --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
       /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
-      /p:ApplicationVersion=1.0.$(Build.BuildId)
+      /p:ApplicationVersion=$(Build.BuildId)
       /p:AndroidSigningKeyPass=$(KeyStorePassword) 
       /p:AndroidSigningStorePass=$(KeyStorePassword) 
       /p:AndroidSigningKeyStore=$(System.DefaultWorkingDirectory)\\$(keyStoreName) 
@@ -203,3 +204,10 @@ jobs:
         **\*Signed.aab
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
       flattenFolders: true
+ 
+  - task: PublishBuildArtifacts@1
+    displayName: Publish APK und AAB
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'Android Drop'
+      publishLocation: 'Container' 
