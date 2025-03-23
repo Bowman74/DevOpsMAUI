@@ -103,18 +103,6 @@ jobs:
 #      PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
 #      ArtifactName: 'ios drop'
 #      publishLocation: 'Container'
-  
-#  - task: AppStoreRelease@1
-#    displayName: 'Push iOS app to App Store Connect'
-#    inputs:
-#      serviceEndpoint: 'Apple App Store Connect'
-#      releaseTrack: 'TestFlight'
-#      appIdentifier: 'com.linkedinlearning.qrtracker'
-#      ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
-#      appType: 'iOS'
-#      shouldSkipWaitingForProcessing: true
-#      shouldSkipSubmission: true
-#      appSpecificId: '6743451240'
 
 #  - task: DotNetCoreCLI@2
 #    displayName: 'Build project for MacOS'
@@ -151,20 +139,8 @@ jobs:
 #        ArtifactName: 'MacOS drop'
 #        publishLocation: 'Container'
 
-#  - task: AppStoreRelease@1
-#    displayName: 'Push MacOS app to App Store Connect'
-#    inputs:
-#        serviceEndpoint: 'Apple App Store Connect'
-#        releaseTrack: 'TestFlight'
-#        appIdentifier: 'com.linkedinlearning.qrtracker'
-#        ipaPath: '$(build.artifactstagingdirectory)/MacOSStaging/*.pkg'
-#        appType: 'macOS'
-#        shouldSkipWaitingForProcessing: true
-#        shouldSkipSubmission: true
-#        appSpecificId: '6743451240'
-      
   - task: DownloadSecureFile@1
-    displayName: Download keystore file 
+    displayName: Download Android keystore file 
     name: keystore
     inputs:
       secureFile: '$(keyStoreName)'
@@ -198,23 +174,45 @@ jobs:
     inputs:
       SourceFolder: '$(outputDirectory)/Android/QRTracker'
       Contents: |
-        *Signed.apk
-        *Signed.aab
+        *.*
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
       flattenFolders: true
  
   - task: PublishBuildArtifacts@1
-    displayName: Publish APK und AAB
+    displayName: Publish APK and AAB
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'Android Drop'
       publishLocation: 'Container' 
   
-  - task: GooglePlayRelease@4
-    inputs:
-      serviceConnection: 'Google Play Console Connection'
-      applicationId: 'com.linkedinlearning.qrtracker'
-      action: 'SingleBundle'
-      bundleFile: '$(outputDirectory)/Android/QRTracker/*.aab'
-      track: 'internal'
-      isDraftRelease: true
+#  - task: AppStoreRelease@1
+#    displayName: 'Push iOS app to App Store Connect'
+#    inputs:
+#      serviceEndpoint: 'Apple App Store Connect'
+#      releaseTrack: 'TestFlight'
+#      appIdentifier: 'com.linkedinlearning.qrtracker'
+#      ipaPath: '$(build.artifactstagingdirectory)/iOSStaging/*.ipa'
+#      appType: 'iOS'
+#      shouldSkipWaitingForProcessing: true
+#      shouldSkipSubmission: true
+#      appSpecificId: '6743451240'
+
+#  - task: AppStoreRelease@1
+#    displayName: 'Push MacOS app to App Store Connect'
+#    inputs:
+#        serviceEndpoint: 'Apple App Store Connect'
+#        releaseTrack: 'TestFlight'
+#        appIdentifier: 'com.linkedinlearning.qrtracker'
+#        ipaPath: '$(build.artifactstagingdirectory)/MacOSStaging/*.pkg'
+#        appType: 'macOS'
+#        shouldSkipWaitingForProcessing: true
+#        shouldSkipSubmission: true
+#        appSpecificId: '6743451240'
+#  - task: GooglePlayRelease@4
+#    inputs:
+#      serviceConnection: 'Google Play Console Connection'
+#      applicationId: 'com.linkedinlearning.qrtracker'
+#      action: 'SingleBundle'
+#      bundleFile: '$(outputDirectory)/Android/QRTracker/*.aab'
+#      track: 'internal'
+#      isDraftRelease: true
