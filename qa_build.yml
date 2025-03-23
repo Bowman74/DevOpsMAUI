@@ -190,7 +190,8 @@ jobs:
       /p:AndroidSigningStorePass=$(KeyStorePassword) 
       /p:AndroidSigningKeyStore=$(System.DefaultWorkingDirectory)\\$(keyStoreName) 
       /p:AndroidSigningKeyAlias=$(KeyStoreAlias) 
-      /p:AndroidKeyStore=true'
+      /p:AndroidKeyStore=true
+      -p:JavacSourceVersion=17 -p:JavacTargetVersion=17'
       zipAfterPublish: false
       
   - task: CopyFiles@2
