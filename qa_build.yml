@@ -169,15 +169,6 @@ jobs:
     inputs:
       secureFile: '$(keyStoreName)'
   
-#  - task: CopyFiles@2
-#    displayName: 'Copy Keystore file to build directory'
-#    inputs:
-#        SourceFolder: '$(keystore.secureFilePath)'
-#        Contents: '$(keyStoreName)'
-#        TargetFolder: '$(System.DefaultWorkingDirectory)'
-#        CleanTargetFolder: false
-#        OverWrite: true
-  
   - task: CmdLine@2
     displayName: Move Keystore to Working Directory
     inputs: 
@@ -191,7 +182,7 @@ jobs:
       publishWebProjects: false
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-android --configuration $(buildConfiguration) 
-      --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)" 
+      --output $(outputDirectory)/Andriod -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
       /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
       /p:ApplicationVersion=$(Build.BuildId)
@@ -205,9 +196,10 @@ jobs:
   - task: CopyFiles@2
     displayName: Copy APK and AAB
     inputs:
+      SourceFolder: '$(outputDirectory)/Android/QRTracker'
       Contents: |
-        **\*Signed.apk
-        **\*Signed.aab
+        *Signed.apk
+        *Signed.aab
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
       flattenFolders: true
  
