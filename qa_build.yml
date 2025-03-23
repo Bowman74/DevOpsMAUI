@@ -159,7 +159,8 @@ jobs:
       projects: 'QRTracker/QRTracker.csproj'
       arguments: '-f net9.0-android --configuration $(buildConfiguration) 
       --output $(outputDirectory)/Android -p:CodesignKey="$(codesignKey)" 
-      -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
+      -p:CodesignProvision="$(codesignProvisioningProfileMac)"
+      -p:AndroidPackageFormat=aab -p:DebugType=portable -p:DebugSymbols=true  
       /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
       /p:ApplicationVersion=$(Build.BuildId)
       /p:AndroidSigningKeyPass=$(KeyStorePassword) 
