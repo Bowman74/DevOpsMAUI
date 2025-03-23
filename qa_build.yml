@@ -176,13 +176,13 @@ jobs:
       Contents: |
         *Signed.apk
         *Signed.aab
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/AndroidStaging'
       flattenFolders: true
  
   - task: PublishBuildArtifacts@1
     displayName: Publish APK und AAB
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/AndroidStaging'
       ArtifactName: 'Android Drop'
       publishLocation: 'Container' 
   
