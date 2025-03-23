@@ -178,12 +178,12 @@ jobs:
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
       flattenFolders: true
  
-  - task: PublishBuildArtifacts@1
-    displayName: Publish APK and AAB
+  - task: CopyFiles@2
+    displayName: Copy APK and AAB
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)\**'
-      ArtifactName: 'Android Drop'
-      publishLocation: 'Container' 
+      SourceFolder: '$(outputDirectory)/Android/QRTracker'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      flattenFolders: true
   
 #  - task: AppStoreRelease@1
 #    displayName: 'Push iOS app to App Store Connect'
