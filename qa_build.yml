@@ -184,7 +184,6 @@ jobs:
       arguments: '-f net9.0-android --configuration $(buildConfiguration) 
       --output $(outputDirectory)/Android -p:CodesignKey="$(codesignKey)" 
       -p:CodesignProvision="$(codesignProvisioningProfileMac)" 
-      -p:JavacSourceVersion=17 -p:JavacTargetVersion=17 
       /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
       /p:ApplicationVersion=$(Build.BuildId)
       /p:AndroidSigningKeyPass=$(KeyStorePassword) 
