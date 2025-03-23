@@ -169,14 +169,20 @@ jobs:
     inputs:
       secureFile: '$(keyStoreName)'
   
-  - task: CopyFiles@2
-    displayName: 'Copy MacOS file from Build to Staging'
-    inputs:
-        SourceFolder: '$(keystore.secureFilePath)'
-        Contents: '$(keyStoreName)'
-        TargetFolder: '$(System.DefaultWorkingDirectory)'
-        CleanTargetFolder: true
-        OverWrite: true
+#  - task: CopyFiles@2
+#    displayName: 'Copy Keystore file to build directory'
+#    inputs:
+#        SourceFolder: '$(keystore.secureFilePath)'
+#        Contents: '$(keyStoreName)'
+#        TargetFolder: '$(System.DefaultWorkingDirectory)'
+#        CleanTargetFolder: false
+#        OverWrite: true
+  
+  - task: CmdLine@2
+    displayName: Move Keystore to Working Directory
+    inputs: 
+      script: |
+        mv $(keystore.secureFilePath) $(System.DefaultWorkingDirectory)
         
   - task: DotNetCoreCLI@2
     displayName: 'Build project for Android'
