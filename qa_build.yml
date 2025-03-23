@@ -176,14 +176,14 @@ jobs:
     inputs:
       SourceFolder: '$(outputDirectory)/Android/QRTracker'
       Contents: |
-        *.*
+        **
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
       flattenFolders: true
  
   - task: PublishBuildArtifacts@1
     displayName: Publish APK and AAB
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)\**'
       ArtifactName: 'Android Drop'
       publishLocation: 'Container' 
   
