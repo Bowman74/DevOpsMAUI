@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DTXApplicationID</key>
+	<string>932d9800-4d16-4347-bc5f-95ffaf9b8d44</string>
+	<key>DTXBeaconURL</key>
+	<string>https://bf63099gsg.bf.dynatrace.com/mbeacon</string>
+	<key>DTXUserOptIn</key>
+	<false/>
+	<key>DTXStartupLoadBalancing</key>
+	<true/>
+	<key>DTXCrashReportingEnabled</key>
+	<false/>
+	<key>DTXCrashHandlerXamarin</key>
+	<true/>
+	<key>DTXInstrumentWebRequestTiming</key>
+	<false/>
+	<key>DTXInstantCrashReportingEnabled</key>
+	<false/>
+	<key>DTXFlavor</key>
+	<string>maui</string>
+</dict>
+</plist>
