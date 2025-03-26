@@ -36,13 +36,19 @@ public partial class App : Application
         CrossNewRelic.Current.HandleUncaughtException();
         CrossNewRelic.Current.TrackShellNavigatedEvents();
 
+        AgentStartConfiguration configuration = new AgentStartConfiguration 
+        {
+            analyticsEventEnabled = true,
+            newEventSystemEnabled = true,
+            interactionTracingEnabled = true,
+        };
         if (DeviceInfo.Current.Platform == DevicePlatform.Android)
         {
-            CrossNewRelic.Current.Start("AA52d55d7ccd625cd835f754b73458b6b724169c5d-NRMA");
+            CrossNewRelic.Current.Start("AA52d55d7ccd625cd835f754b73458b6b724169c5d-NRMA", configuration);
         }
         else if (DeviceInfo.Current.Platform == DevicePlatform.iOS)
         {
-            CrossNewRelic.Current.Start("AA016ea8f9365e5dbb11908aee885d8110e407ef86-NRMA");
+            CrossNewRelic.Current.Start("AA016ea8f9365e5dbb11908aee885d8110e407ef86-NRMA", configuration);
         }
 #endif
     }

@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.VisualBasic;
+using NewRelic.MAUI.Plugin;
 using QRTracker.Constants;
 using QRTracker.Shared.Models;
 
@@ -25,13 +27,38 @@ public class QRItemDetailViewModel : BaseViewModel
 
     private async Task OnSave()
     {
-        var pageParams = new ShellNavigationQueryParameters();
-        if (QRCodeItem != null)
+#if ANDROID || IOS
+        string interactionId = string.Empty;
+        try
         {
-            pageParams.Add("UpdatedQRCode", QRCodeItem);
-        }
+            interactionId = CrossNewRelic.Current.StartInteraction("QR Item Updated");
+#endif
+            var pageParams = new ShellNavigationQueryParameters();
+            if (QRCodeItem != null)
+            {
+                pageParams.Add("UpdatedQRCode", QRCodeItem);
+#if ANDROID || IOS
+                var success = CrossNewRelic.Current.RecordCustomEvent("Database Operations", "QR Item Updated", new Dictionary<string, object>
+                {
+                    { "Interaction Id", interactionId},
+                    { "Item Id", QRCodeItem.Id }
+                });
+#endif
+            }
 
-        await Shell.Current.GoToAsync("..", true, pageParams);
+            await Shell.Current.GoToAsync("..", true, pageParams);
+#if ANDROID || IOS
+        }
+        catch (Exception ex)
+        {
+            CrossNewRelic.Current.RecordException(ex);
+            throw;
+        }
+        finally
+        {
+            CrossNewRelic.Current.EndInteraction(interactionId);
+        }
+#endif
     }
 
     private Command? _CancelCommand;
