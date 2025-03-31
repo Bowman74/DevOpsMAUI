@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "877931839048",
+    "project_id": "qrtracker-7c21a",
+    "storage_bucket": "qrtracker-7c21a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877931839048:android:195b4217ad78e5f828627d",
+        "android_client_info": {
+          "package_name": "com.linkedinlearning.qrtracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4UfwQxva-IEGGl7OKgLOswneOCw1HXcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

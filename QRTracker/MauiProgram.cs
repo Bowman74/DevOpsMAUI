@@ -57,5 +57,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<INotificationHubClient, NotificationHubClient>((IServiceProvider provider) => {
             return NotificationHubClient.CreateClientFromConnectionString("[connection_string]", "[Hub Name]", true);
         });
+
+#if ANDROID
+        builder.Services.AddScoped<Interfaces.INotificationRegistrationService, Platforms.Android.NotificationRegistrationService>();
+#endif
     }
 }
