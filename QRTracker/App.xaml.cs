@@ -52,4 +52,25 @@ public partial class App : Application
     {
         return new MainAppWindow(_MainApplicationViewModel);
     }
+
+    protected override async void OnStart()
+    {
+        base.OnStart();
+#if ANDROID
+        PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
+        if (status != PermissionStatus.Granted)
+        {
+            status = await Permissions.RequestAsync<Permissions.PostNotifications>();
+            if (status != PermissionStatus.Granted)
+            {
+                Console.WriteLine("Notification permission denied.");
+            }
+        }
+        if (status == PermissionStatus.Granted)
+        {
+            var message = new RegisterDeviceMessage();
+            WeakReferenceMessenger.Default.Send(message);
+        }
+#endif
+    }
 }
