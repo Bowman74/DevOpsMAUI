@@ -18,8 +18,29 @@ public abstract class NotificationRegistrationServiceBase : INotificationRegistr
 
     protected abstract Task<Installation?> GetHubInstallation(RegisterDeviceMessage message);
 
-    public Task<bool> RegisterDeviceWithNotificationHub(RegisterDeviceMessage message)
+    public async Task<bool> RegisterDeviceWithNotificationHub(RegisterDeviceMessage message)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (_connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                return false;
+            }
+
+            var installation = await GetHubInstallation(message);
+            if (installation == null)
+            {
+                return false;
+            }
+
+            await _notificationHubClient.CreateOrUpdateInstallationAsync(installation);
+            return true;
+
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+
     }
 }
