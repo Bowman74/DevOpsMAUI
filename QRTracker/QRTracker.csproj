@@ -60,13 +60,6 @@
         <ApplicationId>com.linkedinlearning.qrtracker</ApplicationId>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
-        <ProvisioningType>automatic</ProvisioningType>
-        <CodesignKey>Apple Development: Created via API (9QSR246R93)</CodesignKey>
-        <CodesignProvision>VS: com.linkedinlearning.qrtracker Development</CodesignProvision>
-        <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
-    </PropertyGroup>
-
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
         <ApplicationId>com.linkedinlearning.qrtracker</ApplicationId>
     </PropertyGroup>
@@ -89,12 +82,6 @@
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
         <ApplicationId>com.linkedinlearning.qrtracker</ApplicationId>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-maccatalyst'">
-        <ProvisioningType>automatic</ProvisioningType>
-        <CodesignKey>Apple Development: Created via API (9QSR246R93)</CodesignKey>
-        <CodesignEntitlements>Platforms\MacCatalyst\Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
 
     <ItemGroup>
