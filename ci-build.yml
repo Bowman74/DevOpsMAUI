@@ -54,17 +54,3 @@ jobs:
   - task: InstallAppleProvisioningProfile@1
     inputs:
       provProfileSecureFile: 'VS_comlinkedinlearningqrtracker_Development.mobileprovision'
-
-  - task: DotNetCoreCLI@2
-    displayName: 'Build project for iOS'
-    inputs:
-     command: build
-     projects: 'QRTracker/QrTracker.csproj'
-     arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/iOS'
-
-  - task: DotNetCoreCLI@2
-    displayName: 'Build project for MacOS'
-    inputs:
-     command: build
-     projects: 'QRTracker/QrTracker.csproj'
-     arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MacOS'
