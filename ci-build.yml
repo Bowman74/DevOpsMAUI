@@ -38,11 +38,6 @@ jobs:
     displayName: "dotnet workload restore"
     inputs:
       script: 'dotnet workload restore'
-  
-  - task: CmdLine@2
-    displayName: "Selects a specific version of Xcode"
-    inputs:
-      script: "sudo xcode-select -s /Applications/Xcode_16.3.app"
 
   - task: DotNetCoreCLI@2
     displayName: 'Build project for Android'
