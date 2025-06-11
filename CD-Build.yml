@@ -68,8 +68,8 @@ jobs:
      -p:codesignProvision="$(codesignProvisioningProfileiOS)"
      -p:codesignEntitlements="Platforms/iOS/Entitlements.plist"
      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-     /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
-     /p:ApplicationVersion=1.0.$(Build.BuildId)'
+     /p:ApplicationDisplayVersion=1.0.130
+     /p:ApplicationVersion=1.0.130'
      zipAfterPublish: false
     env:
       DISABLE_BITCODE: 'yes'
