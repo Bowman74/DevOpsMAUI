@@ -45,18 +45,18 @@ jobs:
     inputs:
       script: 'sudo xcode-select -s /Applications/Xcode_16.3.app'
 
-
+  - task: InstallAppleCertificate@2
+    displayName: 'Add Installer Certificate'
+    inputs:
+      certSecureFile: 'AppleMacInstallerCertificate.p12'
+      certPwd: '$(iOSCertPassword)'
+    
   - task: InstallAppleCertificate@2
     displayName: 'Add Distribution Certificate'
     inputs:
       certSecureFile: 'AppleDistributionCertificate.p12'
       certPwd: '$(iOSCertPassword)'
 
-  - task: InstallAppleCertificate@2
-    displayName: 'Add Installer Certificate'
-    inputs:
-      certSecureFile: 'AppleMacInstallerCertificate.p12'
-      certPwd: '$(iOSCertPassword)'
   - task: InstallAppleProvisioningProfile@1
     displayName: 'Add iOS Provisioning Profile'
     inputs:
