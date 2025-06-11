@@ -24,7 +24,7 @@ jobs:
 - job: Build_Main
   displayName: 'Build Main'
   pool:
-   vmImage: 'macos-latest'
+   vmImage: 'macos-15'
    demands: xcode
 
   steps:
@@ -42,7 +42,7 @@ jobs:
   - task: CmdLine@2
     displayName: "Selects a specific version of xcode"
     inputs:
-      script: 'sudo xcode-select -s /Applications/Xcode_16.2.app'
+      script: 'sudo xcode-select -s /Applications/Xcode_16.3.app'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build project for Android'
