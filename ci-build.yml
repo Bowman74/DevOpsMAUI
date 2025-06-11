@@ -42,11 +42,6 @@ jobs:
   - task: CmdLine@2
     displayName: "Selects a specific version of xcode"
     inputs:
-      script: 'system_profiler'
-
-  - task: CmdLine@2
-    displayName: "Selects a specific version of xcode"
-    inputs:
       script: 'sudo xcode-select -s /Applications/Xcode_16.2.app'
 
   - task: DotNetCoreCLI@2
