@@ -29,17 +29,52 @@ jobs:
 
   steps:
    
-#  - task: UseDotNet@2
-#    inputs:
-#      packageType: 'sdk'
-#      version: '9.x'
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '9.x'
 
-#  - task: CmdLine@2
-#    displayName: "dotnet workload restore"
-#    inputs:
-#      script: 'dotnet workload restore'
+  - task: CmdLine@2
+    displayName: "dotnet workload restore"
+    inputs:
+      script: 'dotnet workload restore'
 
   - task: CmdLine@2
     displayName: "Selects a specific version of xcode"
     inputs:
       script: 'system_profiler'
+
+  - task: CmdLine@2
+    displayName: "Selects a specific version of xcode"
+    inputs:
+      script: 'sudo xcode-select -s /Applications/Xcode_16.2.app'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for Android'
+    inputs:
+     command: build
+     projects: 'QRTracker/QrTracker.csproj'
+     arguments: '-f net9.0-android --configuration $(buildConfiguration) --output $(outputDirectory)/Android'
+
+  - task: InstallAppleCertificate@2
+    inputs:
+      certSecureFile: 'AppleDeveloperCertificate.p12'
+      certPwd: '$(iOSCertPassword)'
+
+  - task: InstallAppleProvisioningProfile@1
+    inputs:
+      provProfileSecureFile: 'VS_comlinkedinlearningqrtracker_Development.mobileprovision'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for iOS'
+    inputs:
+     command: build
+     projects: 'QRTracker/QrTracker.csproj'
+     arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/ios'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for MacOS'
+    inputs:
+     command: build
+     projects: 'QRTracker/QrTracker.csproj'
+     arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MasOC'
