@@ -57,13 +57,51 @@ jobs:
     inputs:
       provProfileSecureFile: 'LinkedIn_Learning_QRTracker.mobileprovision'
 
-#  - task: DotNetCoreCLI@2
-#    displayName: 'Build project for iOS'
-#    inputs:
-#     command: build
-#     projects: 'QRTracker/QrTracker.csproj'
-#     arguments: '-f net9.0-ios --configuration $(buildConfiguration) --output $(outputDirectory)/ios'
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for iOS'
+    inputs:
+     command: publish
+     publishWebProjects: false
+     projects: 'QRTracker/QrTracker.csproj'
+     arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
+     --output $(outputDirectory)/ios -p:CodesignKey="$(codesignKey)"
+     -p:codesignProvision="$(codesignProvisioningProfileiOS)"
+     -p:codesignEntitlements="Platrons/iOS/Entitlements.plist"
+     /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
+     /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
+     /p:ApplicationVersion=1.0.$(Build.BuildId)'
+     zipAfterPublish: false
+    env:
+      DISABLE_BITCODE: 'yes'
   
+  - task: CopyFiles@2
+    displayName: 'Copy iOS file from Build to Staging'
+    inputs:
+      SourceFolder: '$(outputDirectory)/iOS/QRTracker'
+      Contents: 'QRTracker.ipa'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/iOSStaging'
+      CleanTargetFolder: true
+      OverWrite: true
+  
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish iOS files'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/iOSStaging'
+      ArtifactName: 'ios drop'
+      publishLocation: 'Container'
+  
+  - task: AppStoreRelease@1
+    displayName: 'Push iOS App to App Store Connect'
+    inputs:
+      serviceEndpoint: 'Apple App Store Connect'
+      releaseTrack: 'TestFlight'
+      appIdentifier: 'com.linkedinlearning.qrtracker'
+      ipaPath: '$(Build.ArtifactStagingDirectory)/iOSStaging/*.ipa'
+      appType: 'iOS'
+      shouldSkipWaitingForProcessing: true
+      shouldSkipSubmission: true
+      appSpecificId: '6743451240'
+
 - job: Build_MacOS
   displayName: 'Build MacOS'
   pool:
@@ -98,9 +136,9 @@ jobs:
     inputs:
       provProfileSecureFile: 'LinkedIn_Learning_QRTracker_Mac.provisionprofile'
   
-#  - task: DotNetCoreCLI@2
-#    displayName: 'Build project for MacOS'
-#    inputs:
-#     command: build
-#     projects: 'QRTracker/QrTracker.csproj'
-#     arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MacOS'
+  - task: DotNetCoreCLI@2
+    displayName: 'Build project for MacOS'
+    inputs:
+     command: build
+     projects: 'QRTracker/QrTracker.csproj'
+     arguments: '-f net9.0-maccatalyst --configuration $(buildConfiguration) --output $(outputDirectory)/MacOS'
