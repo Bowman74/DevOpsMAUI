@@ -66,7 +66,7 @@ jobs:
      arguments: '-f net9.0-ios --configuration $(buildConfiguration) 
      --output $(outputDirectory)/ios -p:CodesignKey="$(codesignKey)"
      -p:codesignProvision="$(codesignProvisioningProfileiOS)"
-     -p:codesignEntitlements="Platrons/iOS/Entitlements.plist"
+     -p:codesignEntitlements="Platforms/iOS/Entitlements.plist"
      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
      /p:ApplicationDisplayVersion=1.0.$(Build.BuildId)
      /p:ApplicationVersion=1.0.$(Build.BuildId)'
