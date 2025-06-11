@@ -97,3 +97,10 @@ jobs:
      command: build
      projects: 'QRTracker/QrTracker.csproj'
      arguments: '-f net9.0-windows10.0.19041.0 --configuration $(buildConfiguration) --output $(outputDirectory)/Windows'
+
+  - task: DotNetCoreCLI@2
+    displayName: "Run unit tests"
+    inputs:
+     command: test
+     projects: '**/*.Tests.csproj'
+     arguments: '--configuration $(buildConfiguration)'
