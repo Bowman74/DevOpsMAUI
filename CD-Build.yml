@@ -25,7 +25,7 @@ jobs:
 - job: Build_Main
   displayName: 'Build Main'
   pool:
-   vmImage: 'macos-15'
+   vmImage: 'macos-latest'
    demands: xcode
 
   steps:
