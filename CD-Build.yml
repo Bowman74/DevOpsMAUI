@@ -9,9 +9,17 @@ trigger:
 variables:
   - group: BuildVariables
   - name: buildConfiguration
-    value: 'Debug'
+    value: 'Release'
   - name: outputDirectory
     value: '$(Build.ArtifactStagingDirectory)/output'
+  - name: codesignKey
+    value: 'Apple Distribution: kevin Ford (B4XFLSJ3F4)'
+  - name: packagesignKey
+    value: '3rd Party Mac Developer Installer: kevin Ford (B4XFLSJ3F4)'
+  - name: codesignProvisioningProfileiOS
+    value: 'LinkedIn Learning QRTracker'
+  - name: codesignProvisioningProfileMac
+    value: 'LinkedIn Learning QRTracker Mac'
 
 jobs:
 - job: Build_Main
@@ -39,14 +47,25 @@ jobs:
 
 
   - task: InstallAppleCertificate@2
+    displayName: 'Add Distribution Certificate'
     inputs:
-      certSecureFile: 'AppleDeveloperCertificate.p12'
+      certSecureFile: 'AppleDistributionCertificate.p12'
       certPwd: '$(iOSCertPassword)'
 
-  - task: InstallAppleProvisioningProfile@1
+  - task: InstallAppleCertificate@2
+    displayName: 'Add Installer Certificate'
     inputs:
-      provProfileSecureFile: 'VS_comlinkedinlearningqrtracker_Development.mobileprovision'
+      certSecureFile: 'AppleMacInstallerCertificate.p12'
+      certPwd: '$(iOSCertPassword)'
+  - task: InstallAppleProvisioningProfile@1
+    displayName: 'Add iOS Provisioning Profile'
+    inputs:
+      provProfileSecureFile: 'LinkedIn_Learning_QRTracker.mobileprovision'
 
+  - task: InstallAppleProvisioningProfile@1
+    displayName: 'Add MacOS Provisioning Profile'
+    inputs:
+      provProfileSecureFile: 'LinkedIn_Learning_QRTracker_Mac.provisionprofile'
   - task: DotNetCoreCLI@2
     displayName: 'Build project for iOS'
     inputs:
