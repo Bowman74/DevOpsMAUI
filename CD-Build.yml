@@ -68,17 +68,11 @@ jobs:
      -p:codesignProvision="$(codesignProvisioningProfileiOS)"
      -p:codesignEntitlements="Platforms/iOS/Entitlements.plist"
      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
-     /p:ApplicationDisplayVersion=1.0.130
-     /p:ApplicationVersion=1.0.130'
+     /p:ApplicationDisplayVersion=1.1.$(Build.BuildId)
+     /p:ApplicationVersion=1.1.$(Build.BuildId)'
      zipAfterPublish: false
     env:
       DISABLE_BITCODE: 'yes'
-
-  - task: CmdLine@2
-    displayName: 'List files'
-    inputs:
-      script: ls
-      workingDirectory: '$(outputDirectory)/ios/QRTracker'
   
   - task: CopyFiles@2
     displayName: 'Copy iOS file from Build to Staging'
@@ -107,4 +101,3 @@ jobs:
       shouldSkipWaitingForProcessing: true
       shouldSkipSubmission: true
       appSpecificId: '6743451240'
-
