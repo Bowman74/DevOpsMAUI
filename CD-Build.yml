@@ -73,12 +73,18 @@ jobs:
      zipAfterPublish: false
     env:
       DISABLE_BITCODE: 'yes'
+
+  - task: CmdLine@2
+    displayName: 'List files'
+    inputs:
+      script: ls
+      workingDirectory: '$(outputDirectory)/ios/QRTracker'
   
   - task: CopyFiles@2
     displayName: 'Copy iOS file from Build to Staging'
     inputs:
       SourceFolder: '$(outputDirectory)/ios/QRTracker'
-      Contents: 'QRTracker.ipa'
+      Contents: 'QrTracker.ipa'
       TargetFolder: '$(Build.ArtifactStagingDirectory)/iOSStaging'
       CleanTargetFolder: true
       OverWrite: true
