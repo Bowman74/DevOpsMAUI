@@ -49,6 +49,23 @@
         <PublishAot Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">true</PublishAot>
         <PublishAot Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">true</PublishAot>
     </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+        <CodesignResourceRules></CodesignResourceRules>
+        <ApplicationId>com.linkedinlearning.qrtracker</ApplicationId>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+        <CodesignResourceRules></CodesignResourceRules>
+        <ApplicationId>com.linkedinlearning.qrtracker</ApplicationId>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
+        <ProvisioningType>automatic</ProvisioningType>
+        <CodesignKey>Apple Development: Created via API (9QSR246R93)</CodesignKey>
+        <CodesignProvision>VS: com.linkedinlearning.qrtracker Development</CodesignProvision>
+        <CodesignEntitlements>Platforms\iOS\Entitlements.plist</CodesignEntitlements>
+    </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
         <CodesignResourceRules></CodesignResourceRules>
