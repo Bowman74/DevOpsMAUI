@@ -146,7 +146,7 @@ jobs:
      --output $(outputDirectory)/MacOS -p:CodesignKey="$(codesignKey)"
      -p:codesignProvision="$(codesignProvisioningProfileMac)"
      -p:EnablePackageSigning=true
-     -p:PackageSigningKey=$(packagesignKey)
+     -p:PackageSigningKey="$(packagesignKey)"
      -p:codesignEntitlements="Platforms/MacCatalyst/Entitlements.plist"
      /p:ArchiveOnBuild=true /p:EnableAssemblyILStripping=false
      /p:ApplicationDisplayVersion=1.1.$(Build.BuildId)
@@ -181,4 +181,4 @@ jobs:
       appType: 'macOS'
       shouldSkipWaitingForProcessing: true
       shouldSkipSubmission: true
-      appSpecificId: '6743451240'
+      appSpecificId: '6743451240' 
