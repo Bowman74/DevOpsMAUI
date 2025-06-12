@@ -27,7 +27,8 @@ jobs:
   pool:
    vmImage: 'macos-15'
    demands: xcode
-
+  condition: eq(1,2)
+  
   steps:
    
   - task: UseDotNet@2
@@ -107,7 +108,6 @@ jobs:
   pool:
    vmImage: 'macos-15'
    demands: xcode
-  condition: eq(1,2)
 
   steps:
    
